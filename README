@@ -1,0 +1,41 @@
+readme.txt
+06/21/2011
+
+Overview:
+---------
+Use these code samples to get a basic start with the data catalog. Feel free 
+to modify anything you need. If you come up with better ideas than shared here,
+be sure to share your innovation on our github repository.
+
+Requirements:
+-------------
+These code samples are not necessarily production ready. However, to use these code 
+samples "as is," you'll need the following:
+
+- PHP5.x
+- Apache 2.x with mod_rewrite enabled
+- PEAR Pager package installed
+- PHP mcrypt module installed and enabled
+- API keys from http://www.google.com/recaptcha/mailhide/ 
+
+Of course, you can always just take bits and pieces of this code to get you started. 
+
+The PEAR Pager is used for the pagination of search results. You can substitute 
+another pagination solution if desired.
+
+The PHP mcrypt, recaptcha file, and mailhide API keys are used to hide email addresses 
+from SPAMbots. You can omit this if you choose to do so.
+
+Installation:
+-------------
+1) Upload the files to your directory of choice. If you put the files in a different location, you'll need to update paths in the code samples and .htaccess file.
+
+2) As a test, load the index.php page in a browser. By default it should load "Arvada" data (City of Arvada).
+
+3) If it displays data, open /classes/ckan.php class file and edit the configuration settings at the top of the page. You'll want to change the agency, default tag, and tag filters. If you get no data or an error, something might be wrong with your .htaccess file and/or Apache configuration.
+
+4) Go to http://opencolorado.org and add your datasets with proper tags and agency selected.
+
+5) Load the index.php page in a browser. It should now show your data.
+
+6) If you are using the MailHide functionality, go to http://www.google.com/recaptcha/mailhide/ to get your own API keys. Paste the public and private keys into appropriate settings in index.php
