@@ -1,0 +1,41 @@
+# Enable rewrite engine
+Options +FollowSymLinks -MultiViews
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^format/(.*)/ index.php?f=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^format/(.*) index.php?f=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^search/(.*)/ index.php?q=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^search/(.*) index.php?q=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^tag/(.*)/ index.php?t=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^tag/(.*) index.php?t=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^/$ index.php [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteRule ^(.+)/$ index.php?d=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} !.css$ [NC]
+RewriteCond %{REQUEST_URI} !.js$ [NC]
+RewriteCond %{REQUEST_URI} ![d=index.php]$ [NC]
+RewriteRule ^(.+)$ index.php?d=$1 [QSA,L]
+
