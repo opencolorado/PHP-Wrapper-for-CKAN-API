@@ -10,9 +10,8 @@
 class Ckan {
 	/* start -- some setting you might want to change */
 	public $url = 				'http://colorado.ckan.net/';
-	public $agency = 			'Boulder'; // the default Agency for your catalog
-	public $default_tag = 		'boulder'; // the default tag of your organization
-	public $tag_filters = 		array('boulder','colorado'); // these tags will not show in tag results in your catalog
+	public $group = 			'arvada'; // the default group for your catalog (this is the group on CKAN)
+	public $tag_filters = 		array('arvada','colorado'); // these tags will not show in tag results in your catalog
 	/* end -- some setting you might want to change */
 	
 	private $errors = array( 
@@ -35,7 +34,6 @@ class Ckan {
 
 		$ch = curl_init($this->url . $url);
 
-
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
@@ -48,6 +46,7 @@ class Ckan {
 		if (!$result){
 			$result = "No Result";
 		}
+
 		return json_decode($result);
 	}
 	
@@ -63,8 +62,11 @@ class Ckan {
 	
 	
 	/* search packages - offset is the number of the first result and limit is the number of results to return. Specify either rank or the field to sort the results by */
-	public function searchAll($string='',$offset='0',$limit='20',$order=''){
-		$results = $this->transfer('api/search/package?all_fields=1&offset='.$offset.'&limit='.$limit.'&order_by='.$order.'&q='.urlencode($string).'&agency='.urlencode($this->agency));
+	public function searchAll($string='',$offset='0',$limit='20',$order='rank'){
+		if($order == '') {
+			$order = 'rank'; // CKAN API >= 1.4 empty value not allowed, default is rank		
+		}	
+		$results = $this->transfer('api/2/search/package?all_fields=1&offset='.$offset.'&limit='.$limit.'&order_by='.$order.'&q='.urlencode($string).'&groups='.urlencode($this->group));
 		if (!$results->count){
 			$results = array('error' => 'Search Error', 'msg' => 'No results were found.');
 		}
@@ -94,7 +96,7 @@ class Ckan {
 
    	/* get a specific package */
 	public function getPackage($package){
-		$package = $this->transfer('api/rest/package/'.urlencode($package));
+		$package = $this->transfer('api/2/rest/package/'.urlencode($package));
 		if (!$package){
 			$package = array('error' => 'Package Load Error', 'msg' => 'Sorry that package could not be loaded.');
 		}
@@ -104,7 +106,7 @@ class Ckan {
 
 	/* get a list of all packages */
 	public function getPackageList(){
-		$list =  $this->transfer('api/rest/package');
+		$list =  $this->transfer('api/2/rest/package');
 		if (!is_array($list)){
 			$list = array('error' => 'Package List Error', 'msg' => 'Sorry the packages could not be loaded.');
 		}
@@ -113,7 +115,7 @@ class Ckan {
 	
 	/* get a specific group */
 	public function getGroup($group){
-		$group = $this->transfer('api/rest/group/' . urlencode($group) );
+		$group = $this->transfer('api/2/rest/group/' . urlencode($group) );
 		if (!$group->name){
 			$group = array('error' => 'Group Error', 'msg' => 'Sorry that group could not be loaded.');
 		}
@@ -122,7 +124,7 @@ class Ckan {
 	
 	/* get a list of all groups */
 	public function getGroupList(){
-		$groupList = $this->transfer('api/rest/group');
+		$groupList = $this->transfer('api/2/rest/group');
 		if (!is_array($groupList)){
 			$groupList = array('error' => 'Group List Error', 'msg' => 'Sorry the groups could not be loaded.');
 		}

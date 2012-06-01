@@ -36,19 +36,7 @@ if(isset($_GET['d'])) { // show selected dataset
 				}
 			$display .= '</ul>
 		</div>
-		<div class="item-list">
-			<h2 class="underline">Groups</h2>
-			<ul>';
-				if(isset($pkg->groups) && count($pkg->groups) > 0) {
-					foreach($pkg->groups as $group) {
-						$display .= '<li><a href="/'.CATALOG_PATH.'/group/'.$group.'">'.$group.'</a></li>';
-					}
-				}
-				else { 
-					$display .= '<li>This package is not part of a group.</li>';
-				}
-			$display .= '</ul>
-		</div>
+		
 		<h2 class="underline">Rating</h2>
 		<div class="rating-group">
 			<div class="inline-rating">
@@ -150,7 +138,7 @@ else { // show search results or default page
 	if($_GET['t']) {
 		// search tags
 		$action = 'searchAll';
-		$q = 'tags:'.$ckan->default_tag.' tags:'.$_GET['t'];
+		$q = 'tags:'.$_GET['t'];
 		$q_raw = $_GET['t'];
 		$q_text = 'with the tag <strong>'.$_GET['t'].'</strong>';
 	}
@@ -169,12 +157,12 @@ else { // show search results or default page
 	else {
 		// show default
 		$action = 'searchAll';
-		$q = 'tags:'.$ckan->default_tag;
+		$q = '';
 		$q_raw = '';
 		$q_text = '<strong>total data sets</strong>';
 	}
 
-	$pkgs = $ckan->$action($q,0,1000,'',$ckan->agency);
+	$pkgs = $ckan->$action($q,0,1000,'',$ckan->group);
 	$total = $pkgs->count;
 
 	$display .= '<div id="ckan-right-col">
@@ -214,7 +202,7 @@ else { // show search results or default page
 			$rowsPerPage = $pager->getRowsPerPage();
 			$selectBox = $pager->getPerPageSelect();
 
-			$pkgs = $ckan->$action($q,$pager->getStartRow(),$pager->getRowsPerPage(),'',$ckan->agency);
+			$pkgs = $ckan->$action($q,$pager->getStartRow(),$pager->getRowsPerPage(),'',$ckan->group);
 
 			// show search results
 			$start = $pager->getStartRow() + 1;
@@ -246,7 +234,12 @@ else { // show search results or default page
 					<div class="ckan-results-resources-list">
 						<div class="ckan-result-block-format-title">Format:</div> 
 						<ul class="ckan-resources">';
-							if(isset($result->resources)) {
+							if(isset($result->res_format)) {
+								foreach($result->res_format as $res_format) {
+									$display .= '<li>'.$res_format.'</li>';
+								}
+							}
+							elseif(isset($result->resources)) {
 								foreach($result->resources as $resource) {
 									$display .= '<li>'.$resource->format.'</li>';
 								}
