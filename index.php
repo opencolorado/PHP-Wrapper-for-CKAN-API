@@ -1,5 +1,9 @@
 <?php
 
+define("CATALOG_PATH",             	"");
+//define("CAPTCHA_PUBLIC", 		    "##################");
+//define("CAPTCHA_PRIVATE", 		"##################");
+
 // open_data.php
 include "header.php";
 
@@ -7,10 +11,6 @@ require_once 'Pager/Sliding.php'; // you need PEAR Pager installed on your serve
 require_once 'classes/database/DB_Pager_Sliding.php';
 require_once 'classes/ckan.php';
 require_once 'classes/recaptchalib.php';
-
-define("CATALOG_PATH",             	"");
-//define("CAPTCHA_PUBLIC", 		    "##################");
-//define("CAPTCHA_PRIVATE", 		"##################");
 
 $ckan = new Ckan();
 
@@ -178,7 +178,7 @@ else { // show search results or default page
 	$total = $pkgs->count;
 
 	$display .= '<div id="ckan-right-col">
-		<form id="page-search" action="search/" method="get">
+		<form id="page-search" action="/'.CATALOG_PATH.'/search/" method="get">
 			<input name="q" type="text" tabindex="1" class="search-text" id="search-field" value="'.$q_raw.'" />
 			<input type="submit" class="search-submit" value="Search" />
 		</form>

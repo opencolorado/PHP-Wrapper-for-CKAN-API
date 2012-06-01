@@ -9,9 +9,9 @@ $header = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http:
 		<meta name="description" content="" />
    
 		<title>PHP Wrapper for CKAN API</title>
-		<link href="css/common.css" type="text/css" rel="stylesheet" />
+		<link href="/'.CATALOG_PATH.'/css/common.css" type="text/css" rel="stylesheet" />
    		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-		<script src="js/jquery.tagcloud.js"></script>
+		<script src="/'.CATALOG_PATH.'/js/jquery.tagcloud.js"></script>
 		<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
 			$.fn.tagcloud.defaults = {
